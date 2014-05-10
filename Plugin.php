@@ -44,8 +44,8 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	public static function config(Typecho_Widget_Helper_Form $form)
 	{
 ?>
-	<div style="color:#999;font-size:0.92857em;font-weight:bold;"><p>在comments.php适当位置插入代码<span style="color:#467B96;">&lt;?php Smilies_Plugin::output(); ?&gt;</span>即可. <br/>
-	注意评论框id须为"textarea", 例: &lt;textarea name="text" id="<span style="color:#E47E00;">textarea</span>"...</p></div>
+	<div style="color:#999;font-size:0.92857em;font-weight:bold;"><p><?php _e('在comments.php适当位置插入代码%s即可. ','<span style="color:#467B96;">&lt;?php Smilies_Plugin::output(); ?&gt;</span>'); ?><br/>
+	<?php _e('注意评论框id须为"textarea", 例: %s','&lt;textarea name="text" id="<span style="color:#E47E00;">textarea</span>"...'); ?></p></div>
 	<script type="text/javascript" src="<?php Helper::options()->adminUrl('js/jquery.js'); ?>"></script>
 	<script type="text/javascript">
 	$(function(){
