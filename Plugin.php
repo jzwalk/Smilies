@@ -1,5 +1,6 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
+
 /**
  * 新版评论表情与贴图插件 原作者<a href="http://kan.willin.org/typecho/smilies-plugin.html">willin kan</a>
  * 
@@ -59,12 +60,12 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 			jqhost.attr("style","color:#999")
 			.find("input").attr("disabled","disabled");
 			jqmode1.click(function(){
- 				jqhost.removeAttr("style")
- 				.find("input").removeAttr("disabled");
+				jqhost.removeAttr("style")
+				.find("input").removeAttr("disabled");
 			});
 			jqmode0.click(function(){
- 				jqhost.attr("style","color:#999")
- 				.find("input").attr("disabled","disabled");
+				jqhost.attr("style","color:#999")
+				.find("input").attr("disabled","disabled");
 			});
 		}
 	});
@@ -105,12 +106,14 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	private static function parsefolders()
 	{
 		$results = glob(__TYPECHO_ROOT_DIR__.__TYPECHO_PLUGIN_DIR__.'/Smilies/*',GLOB_ONLYDIR);
+
 		foreach ($results as $result) {
 			$name = iconv('gbk','utf-8',
 				str_replace(__TYPECHO_ROOT_DIR__.__TYPECHO_PLUGIN_DIR__.'/Smilies/','',$result)
 				);
 			$folders[$name]= $name;
 		}
+
 		return $folders;
 	}
 
@@ -124,6 +127,7 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	{
 		$options = Helper::options();
 		$settings = $options->plugin('Smilies');
+
 		$smiliestrans = array(
 			':?:'		=> 'icon_question.gif',
 			':razz:'	=> 'icon_razz.gif',
@@ -170,17 +174,23 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 			':|'		=> 'icon_neutral.gif',
 			';)'		=> 'icon_wink.gif',
 		);
+
 		$smiliesurl = Typecho_Common::url('Smilies/'.urlencode($settings->smiliesset).'/',$options->pluginUrl);
 		$smiled = array();
-		foreach ($smiliestrans as $tag => $grin) {
+
+		foreach ($smiliestrans as $tag=>$grin) {
 			$smilies = '<img src="'.$smiliesurl.'icon_smile.gif" alt="选择表情"/>';
+
 			if (!in_array($grin,$smiled)) {
 				$smiled[] = $grin;
 				$smiliesicon[] = '<span onclick="Smilies.grin(\''.$tag.'\');" style="cursor:pointer;" data-tag=" '.$tag.' "><img style="margin:2px;" src="'.$smiliesurl.$grin.'" alt="'.$grin.'"/></span>';
 			}
+
 			$smiliestag[] = $tag;
+
 			$smiliesimg[] = '<img class="smilies" src="'.$smiliesurl.$grin.'" alt="'.$grin.'"/>';
 		}
+
 		return array($smilies,$smiliesicon,$smiliestag,$smiliesimg);
 	}
 
@@ -194,13 +204,17 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	public static function showsmilies($text,$widget,$lastResult)
 	{
 		$text = empty($lastResult)?$text:$lastResult;
+
 		Helper::options()->commentsHTMLTagAllowed .= '<img src="" alt=""/>';
+
 		$arrays = self::parsesmilies();
+
 		if ($widget instanceof Widget_Abstract_Comments) {
-			return  str_replace($arrays[2],$arrays[3],$text);
+			return str_replace($arrays[2],$arrays[3],$text);
 		} else {
 			return $text;
 		}
+
 	}
 
 	/**
@@ -213,20 +227,28 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	{
 		$options = Helper::options();
 		$settings = $options->plugin('Smilies');
+
 		$smilies = '';
 		$shadow = 'box-shadow: rgba(190,190,190,1) 1px 3px 15px';
 		$border = 'border-radius: 11px';
 		$arrays = self::parsesmilies();
+
 		$icons = array_unique($arrays[1]);
 		foreach ($icons as $icon) {
 			$smilies .= $icon;
 		}
-		$smiliesdisplay = ($settings->allowpop)?'display:none;position:absolute;z-index:99;width:240px;margin-top:-70px;padding:5px;background:#fff;border:1px solid #bbb;-moz-'.$shadow.';-webkit-'.$shadow.';-khtml-'.$shadow.';'.$shadow.';-moz-'.$border.';-webkit-'.$border.';-khtml-'.$border.';'.$border.';':'display:block;';
+
+		$smiliesdisplay = ($settings->allowpop)?
+			'display:none;position:absolute;z-index:99;width:240px;margin-top:-70px;padding:5px;background:#fff;border:1px solid #bbb;-moz-'.$shadow.';-webkit-'.$shadow.';-khtml-'.$shadow.';'.$shadow.';-moz-'.$border.';-webkit-'.$border.';-khtml-'.$border.';'.$border.';':
+			'display:block;';
+
 		$output = '<div id="smiliesbox" style="'.$smiliesdisplay.'">';
 		$output .= $smilies;
 		$output .= '</div>';
+
 		if ($settings->allowpop)
 			$output .= '<span id="smiliesbutton" title="选择表情"><a href="javascript:Smilies.showBox();">'.$arrays[0].'</a></span>';
+
 		echo $output;
 	}
 
@@ -239,7 +261,9 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	public static function insertjs($widget)
 	{
 		$settings = Helper::options()->plugin('Smilies');
+
 		if ($settings->jqmode) {
+			//jquery模式
 			$js = ($settings->jqhost)?'<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.8.3/jquery.min.js"></script>':'';
 			$js .= '
 <script type="text/javascript">
@@ -278,31 +302,32 @@ $(function() {
 		}
 	});
 $.fn.extend({
-    "insert": function(myValue) {
-        var $t = $(this)[0];
-        if (document.selection) {
-            this.focus();
-            sel = document.selection.createRange();
-            sel.text = myValue;
-            this.focus()
-        } else if ($t.selectionStart || $t.selectionStart == "0") {
-            var startPos = $t.selectionStart;
-            var endPos = $t.selectionEnd;
-            var scrollTop = $t.scrollTop;
-            $t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
-            this.focus();
-            $t.selectionStart = startPos + myValue.length;
-            $t.selectionEnd = startPos + myValue.length;
-            $t.scrollTop = scrollTop
-        } else {
-            this.value += myValue;
-            this.focus()
-        }
-    }
+	"insert": function(myValue) {
+		var $t = $(this)[0];
+		if (document.selection) {
+			this.focus();
+			sel = document.selection.createRange();
+			sel.text = myValue;
+			this.focus()
+		} else if ($t.selectionStart || $t.selectionStart == "0") {
+			var startPos = $t.selectionStart;
+			var endPos = $t.selectionEnd;
+			var scrollTop = $t.scrollTop;
+			$t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+			this.focus();
+			$t.selectionStart = startPos + myValue.length;
+			$t.selectionEnd = startPos + myValue.length;
+			$t.scrollTop = scrollTop
+		} else {
+			this.value += myValue;
+			this.focus()
+		}
+	}
 }) 
 });
 </script>
 		';
+		//原生js模式
 		} else {
 		$js = "
 <script type=\"text/javascript\">
@@ -350,9 +375,11 @@ Smilies = {
 //]]>
 </script>";
 		}
+
 		if ($widget->is('single')) {
 			echo $js;
 		}
+
 	}
 
 }
