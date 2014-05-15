@@ -247,7 +247,7 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 		$output .= '</div>';
 
 		if ($settings->allowpop)
-			$output .= '<span id="smiliesbutton" title="选择表情"><a href="javascript:Smilies.showBox();">'.$arrays[0].'</a></span>';
+			$output .= '<span onclick="Smilies.showBox();" style="cursor:pointer;" id="smiliesbutton" title="选择表情">'.$arrays[0].'</span>';
 
 		echo $output;
 	}
@@ -278,13 +278,13 @@ $(function() {
 			if ($settings->allowpop)
 			$js .= '
 	box.mouseleave(function(){
-		box.fadeOut();
+		button.mouseout();
 	});';
 			$js .= '
-	box.find("a").click(function() {
+	box.find("span").click(function() {
 		var b = $(this).attr("data-tag");
 		$("#textarea").insert(b);
-		box.fadeOut();
+		box.fadeOut("fast");
 	});
 	button.on({
 		click:function(){
@@ -298,7 +298,7 @@ $(function() {
 				box.fadeOut();
 				clearTimeout(a);
 				a = null
-			},100);
+			},200);
 		}
 	});
 $.fn.extend({
