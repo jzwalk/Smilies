@@ -339,7 +339,7 @@ Smilies = {
 	showBox : function () {
 		this.dom('smiliesbox').style.display = 'block';
 		document.onclick = function() {
-			Smilies.closeBox();
+			this.closeBox();
 		}
 	},
 	closeBox : function () {
