@@ -33,7 +33,7 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	 * @return void
 	 * @throws Typecho_Plugin_Exception
 	 */
-	public static function deactivate(){}
+	public static function deactivate() {}
 
 	/**
 	 * 获取插件配置面板
@@ -49,21 +49,21 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	<?php _e('注意评论框id须为"textarea", 例: %s','&lt;textarea name="text" id="<span style="color:#E47E00;">textarea</span>"...'); ?></p></div>
 	<script type="text/javascript" src="<?php Helper::options()->adminUrl('js/jquery.js'); ?>"></script>
 	<script type="text/javascript">
-	$(function(){
+	$(function() {
 		var jqmode1 = $("#jqmode-1"),
 			jqmode0 = $("#jqmode-0");
-		if(jqmode1.is(":checked")){
+		if(jqmode1.is(":checked")) {
 			return false;
 		}
-		else{
+		else {
 			var jqhost = $("#typecho-option-item-jqhost-3");
 			jqhost.attr("style","color:#999")
 			.find("input").attr("disabled","disabled");
-			jqmode1.click(function(){
+			jqmode1.click(function() {
 				jqhost.removeAttr("style")
 				.find("input").removeAttr("disabled");
 			});
-			jqmode0.click(function(){
+			jqmode0.click(function() {
 				jqhost.attr("style","color:#999")
 				.find("input").attr("disabled","disabled");
 			});
@@ -95,7 +95,7 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	 * @param Typecho_Widget_Helper_Form $form
 	 * @return void
 	 */
-	public static function personalConfig(Typecho_Widget_Helper_Form $form){}
+	public static function personalConfig(Typecho_Widget_Helper_Form $form) {}
 
 	/**
 	 * 扫描表情文件夹
@@ -203,7 +203,7 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 	 */
 	public static function showsmilies($text,$widget,$lastResult)
 	{
-		$text = empty($lastResult)?$text:$lastResult;
+		$text = empty($lastResult) ? $text : $lastResult;
 
 		Helper::options()->commentsHTMLTagAllowed .= '<img src="" alt=""/>';
 
@@ -229,8 +229,8 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 		$settings = $options->plugin('Smilies');
 
 		$smilies = '';
-		$shadow = 'box-shadow: rgba(190,190,190,1) 1px 3px 15px';
-		$border = 'border-radius: 11px';
+		$shadow = 'box-shadow:rgba(190,190,190,1) 1px 3px 15px';
+		$border = 'border-radius:11px';
 		$arrays = self::parsesmilies();
 
 		$icons = array_unique($arrays[1]);
@@ -238,7 +238,7 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 			$smilies .= $icon;
 		}
 
-		$smiliesdisplay = ($settings->allowpop)?
+		$smiliesdisplay = ($settings->allowpop) ?
 			'display:none;position:absolute;z-index:99;width:240px;margin-top:-70px;padding:5px;background:#fff;border:1px solid #bbb;-moz-'.$shadow.';-webkit-'.$shadow.';-khtml-'.$shadow.';'.$shadow.';-moz-'.$border.';-webkit-'.$border.';-khtml-'.$border.';'.$border.';':
 			'display:block;';
 
@@ -264,45 +264,45 @@ class Smilies_Plugin implements Typecho_Plugin_Interface
 
 		if ($settings->jqmode) {
 			//jquery模式
-			$js = ($settings->jqhost)?'<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.8.3/jquery.min.js"></script>':'';
+			$js = ($settings->jqhost) ? '<script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.8.3/jquery.min.js"></script>' : '';
 			$js .= '
 <script type="text/javascript">
 $(function() {
 	var box = $("#smiliesbox"),
 		button = $("#smiliesbutton"),
 		a = null;
-	box.mouseover(function(){
+	box.mouseover(function() {
 		clearTimeout(a);
 		a = null;
 	});';
 			if ($settings->allowpop)
 			$js .= '
-	box.mouseleave(function(){
+	box.mouseleave(function() {
 		button.mouseout();
 	});';
 			$js .= '
 	box.find("span").click(function() {
 		var b = $(this).attr("data-tag");
 		$("#textarea").insert(b);
-		box.fadeOut("fast");
+		button.mouseout();
 	});
 	button.on({
-		click:function(){
+		click:function() {
 			box.fadeIn();
 		},
-		mouseover:function(){
+		mouseover:function() {
 			box.fadeIn();
 		},
-		mouseout:function(){
-			a = setTimeout(function(){
+		mouseout:function() {
+			a = setTimeout(function() {
 				box.fadeOut();
 				clearTimeout(a);
 				a = null
-			},200);
+			},100);
 		}
 	});
 $.fn.extend({
-	"insert": function(myValue) {
+	"insert":function(myValue) {
 		var $t = $(this)[0];
 		if (document.selection) {
 			this.focus();
@@ -313,7 +313,7 @@ $.fn.extend({
 			var startPos = $t.selectionStart;
 			var endPos = $t.selectionEnd;
 			var scrollTop = $t.scrollTop;
-			$t.value = $t.value.substring(0, startPos) + myValue + $t.value.substring(endPos, $t.value.length);
+			$t.value = $t.value.substring(0,startPos) + myValue + $t.value.substring(endPos,$t.value.length);
 			this.focus();
 			$t.selectionStart = startPos + myValue.length;
 			$t.selectionEnd = startPos + myValue.length;
@@ -329,29 +329,29 @@ $.fn.extend({
 		';
 		//原生js模式
 		} else {
-		$js = "
-<script type=\"text/javascript\">
+		$js = '
+<script type="text/javascript">
 //<![CDATA[
 Smilies = {
-	dom : function(id) {
+	dom:function(id) {
 		return document.getElementById(id);
 	},
-	showBox : function () {
-		this.dom('smiliesbox').style.display = 'block';
+	showBox:function () {
+		this.dom("smiliesbox").style.display = "block";
 		document.onclick = function() {
 			this.closeBox();
 		}
 	},
-	closeBox : function () {
-		this.dom('smiliesbox').style.display = 'none';
+	closeBox:function () {
+		this.dom("smiliesbox").style.display = "none";
 	},
-	grin : function (tag) {
-		tag = ' ' + tag + ' '; myField = this.dom('textarea');
-		document.selection ? (myField.focus(),sel = document.selection.createRange(),sel.text = tag,myField.focus()) : this.insertTag(tag);
+	grin:function (tag) {
+		tag = \' \'+tag+\' \';myField = this.dom("textarea");
+		document.selection?(myField.focus(),sel = document.selection.createRange(),sel.text = tag,myField.focus()):this.insertTag(tag);
 	},
-	insertTag : function (tag) {
-		myField = Smilies.dom('textarea');
-		myField.selectionStart || myField.selectionStart == '0' ? (
+	insertTag:function (tag) {
+		myField = Smilies.dom("textarea");
+		myField.selectionStart || myField.selectionStart == "0"?(
 			startPos = myField.selectionStart,
 			endPos = myField.selectionEnd,
 			cursorPos = startPos,
@@ -362,18 +362,18 @@ Smilies = {
 			myField.focus(),
 			myField.selectionStart = cursorPos,
 			myField.selectionEnd = cursorPos
-		) : (
+		):(
 			myField.value += tag,
 			myField.focus()
-		);";
+		);';
 		if ($settings->allowpop)
-		$js .= "
-		this.closeBox();";
-		$js .= "
+		$js .= '
+		this.closeBox();';
+		$js .= '
 	}
 }
 //]]>
-</script>";
+</script>';
 		}
 
 		if ($widget->is('single')) {
