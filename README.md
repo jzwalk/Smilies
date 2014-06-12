@@ -1,4 +1,4 @@
-### Smilies 1.0.7 for Typecho 0.9
+### Smilies plugin for Typecho
 
 回归onclick..修正jquery点击事件
 
