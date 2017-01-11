@@ -8,5 +8,5 @@
 + qq系列2016版(56x56/57张)
 + tsj兔斯基(48x48/59张)
 
-####插件说明与效果演示见blog发布地址: 
- > http://www.jzwalk.com/archives/net/smilies-for-typecho
+#### 插件说明与效果演示见blog发布地址: 
+ > http://www.yzmb.me/archives/net/smilies-for-typecho
