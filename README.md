@@ -6,5 +6,5 @@
 - 增加文章表情功能(感谢[LT21](http://lt21.me/archives/12.html))
 - 默认两套表情，配发新扩展包
 
-####详细说明与效果演示见blog发布地址: 
+#### 详细说明与效果演示见blog发布地址: 
  > http://www.jzwalk.com/archives/net/smilies-for-typecho
