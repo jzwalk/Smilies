@@ -295,7 +295,7 @@ $('.gridly').gridly({
 		$options = Helper::options();
 		$settings = $options->plugin('Smilies');
 		$maxwidth = $settings->maxwidth;
-		$maxwidth = $maxwidth ? 'max-width:'.$maxwidth.'px;' : '';
+		$maxwidth = $maxwidth ? 'max-width:'.$maxwidth.'px;display:inline;' : '';
 
 		$smsort = explode('|',$settings->smsort);
 		$pattern = array(':mrgreen:',':neutral:',':twisted:',':arrow:',':shock:',':smile:',':???:',':cool:',':evil:',':grin:',':idea:',':oops:',':razz:',':roll:',':wink:',':cry:',':eek:',':lol:',':mad:',':sad:',':!:',':?:');
