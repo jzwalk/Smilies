@@ -302,15 +302,10 @@ $(function(){
 	{
 		$options = Helper::options();
 		$settings = $options->plugin('Smilies');
-<<<<<<< HEAD
 		$omax = $settings->omax;
 		$omax = $omax ? 'max-width:'.$omax.'px;' : '';
 		$acmax = $archive ? $settings->amax : $settings->cmax;
 		$acmax = $acmax ? 'max-width:'.$acmax.'px;' : '';
-=======
-		$maxwidth = $settings->maxwidth;
-		$maxwidth = $maxwidth ? 'max-width:'.$maxwidth.'px;display:inline;' : '';
->>>>>>> cc674b8e0a0c6916ba88373d4ce32ca9bd96f80f
 
 		//构建标准数组
 		$smurl = Typecho_Common::url('Smilies/'.urlencode($settings->smiliesset).'/',$options->pluginUrl);
@@ -641,7 +636,6 @@ window.jQuery || document.write(\'<script type="text/javascript" src="https://cd
 
 	}
 
-<<<<<<< HEAD
 	/**
 	 * 检查禁用符号
 	 * 
@@ -667,6 +661,3 @@ window.jQuery || document.write(\'<script type="text/javascript" src="https://cd
 	}
 
 }
-=======
-}
->>>>>>> cc674b8e0a0c6916ba88373d4ce32ca9bd96f80f
